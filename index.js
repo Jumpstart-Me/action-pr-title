@@ -1,3 +1,5 @@
+import {GitHub} from '@actions/github/lib/github';
+
 const core = require('@actions/core');
 const github = require('@actions/github');
 
@@ -16,12 +18,13 @@ async function run() {
         const eventName = github.context.eventName;
         const token = core.getInput("github-token", { required: true });
 
-        const client = new github.GitHub(token);
+        // const client_gh = new github.GitHub(token);
+        const client_gh = new GitHub(githubToken);
 
         core.info(`Event name: ${eventName}`);
         if (validEvent.indexOf(eventName) < 0) {
             // core.setFailed(`Invalid event: ${eventName}`);
-            client.pulls.createReview({
+            client_gh.pulls.createReview({
               owner: pullRequest.owner,
               repo: pullRequest.repo,
               pull_number: pullRequest.number,
@@ -38,7 +41,7 @@ async function run() {
         core.info(`Regex: ${regex}`);
         if (!regex.test(title)) {
             // core.setFailed(`Pull Request title "${title}" failed to pass match regex - ${regex}`);
-            client.pulls.createReview({
+            client_gh.pulls.createReview({
               owner: pullRequest.owner,
               repo: pullRequest.repo,
               pull_number: pullRequest.number,
@@ -52,7 +55,7 @@ async function run() {
         const minLen = parseInt(core.getInput('min_length'));
         if (title.length < minLen) {
             // core.setFailed(`Pull Request title "${title}" is smaller than min length specified - ${minLen}`);
-            client.pulls.createReview({
+            client_gh.pulls.createReview({
               owner: pullRequest.owner,
               repo: pullRequest.repo,
               pull_number: pullRequest.number,
@@ -66,7 +69,7 @@ async function run() {
         const maxLen = parseInt(core.getInput('max_length'));
         if (maxLen > 0 && title.length > maxLen) {
             // core.setFailed(`Pull Request title "${title}" is greater than max length specified - ${maxLen}`);
-            client.pulls.createReview({
+            client_gh.pulls.createReview({
               owner: pullRequest.owner,
               repo: pullRequest.repo,
               pull_number: pullRequest.number,
@@ -82,7 +85,7 @@ async function run() {
         core.info(`Allowed Prefixes: ${prefixes}`);
         if (prefixes.length > 0 && !prefixes.split(',').some((el) => validateTitlePrefix(title, el, prefixCaseSensitive))) {
             // core.setFailed(`Pull Request title "${title}" did not match any of the prefixes - ${prefixes}`);
-            client.pulls.createReview({
+            client_gh.pulls.createReview({
               owner: pullRequest.owner,
               repo: pullRequest.repo,
               pull_number: pullRequest.number,
@@ -94,7 +97,7 @@ async function run() {
 
     } catch (error) {
         // core.setFailed(error.message);
-        client.pulls.createReview({
+        client_gh.pulls.createReview({
           owner: pullRequest.owner,
           repo: pullRequest.repo,
           pull_number: pullRequest.number,
