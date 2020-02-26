@@ -40,8 +40,10 @@ async function run() {
         if (validEvent.indexOf(eventName) < 0) {
             // core.setFailed(`Invalid event: ${eventName}`);
             client.pulls.createReview({
-              owner: pullRequest.owner,
-              repo: pullRequest.repo,
+              // owner: pullRequest.owner,
+              // repo: pullRequest.repo,
+              owner,
+              repo,
               pull_number: pullRequest.number,
               body: `Invalid event: ${eventName}`,
               event: 'REQUEST_CHANGES'
@@ -57,8 +59,10 @@ async function run() {
         if (!regex.test(title)) {
             // core.setFailed(`Pull Request title "${title}" failed to pass match regex - ${regex}`);
             client.pulls.createReview({
-              owner: pullRequest.owner,
-              repo: pullRequest.repo,
+              // owner: pullRequest.owner,
+              // repo: pullRequest.repo,
+              owner,
+              repo,
               pull_number: pullRequest.number,
               body: `Pull Request title "${title}" failed to pass match regex - ${regex}`,
               event: 'REQUEST_CHANGES'
@@ -71,8 +75,10 @@ async function run() {
         if (title.length < minLen) {
             // core.setFailed(`Pull Request title "${title}" is smaller than min length specified - ${minLen}`);
             client.pulls.createReview({
-              owner: pullRequest.owner,
-              repo: pullRequest.repo,
+              // owner: pullRequest.owner,
+              // repo: pullRequest.repo,
+              owner,
+              repo,
               pull_number: pullRequest.number,
               body: `Pull Request title "${title}" is smaller than min length specified - ${minLen}`,
               event: 'REQUEST_CHANGES'
@@ -85,8 +91,10 @@ async function run() {
         if (maxLen > 0 && title.length > maxLen) {
             // core.setFailed(`Pull Request title "${title}" is greater than max length specified - ${maxLen}`);
             client.pulls.createReview({
-              owner: pullRequest.owner,
-              repo: pullRequest.repo,
+              // owner: pullRequest.owner,
+              // repo: pullRequest.repo,
+              owner,
+              repo,
               pull_number: pullRequest.number,
               body: `Pull Request title "${title}" is greater than max length specified - ${maxLen}`,
               event: 'REQUEST_CHANGES'
@@ -101,8 +109,10 @@ async function run() {
         if (prefixes.length > 0 && !prefixes.split(',').some((el) => validateTitlePrefix(title, el, prefixCaseSensitive))) {
             // core.setFailed(`Pull Request title "${title}" did not match any of the prefixes - ${prefixes}`);
             client.pulls.createReview({
-              owner: pullRequest.owner,
-              repo: pullRequest.repo,
+              // owner: pullRequest.owner,
+              // repo: pullRequest.repo,
+              owner,
+              repo,
               pull_number: pullRequest.number,
               body: `Pull Request title "${title}" did not match any of the prefixes - ${prefixes}`,
               event: 'REQUEST_CHANGES'
@@ -113,8 +123,10 @@ async function run() {
     } catch (error) {
         // core.setFailed(error.message);
         client.pulls.createReview({
-          owner: pullRequest.owner,
-          repo: pullRequest.repo,
+          // owner: pullRequest.owner,
+          // repo: pullRequest.repo,
+          owner,
+          repo,
           pull_number: pullRequest.number,
           body: error.message,
           event: 'REQUEST_CHANGES'
