@@ -1,5 +1,3 @@
-import {GitHub} from '@actions/github/lib/github';
-
 const core = require('@actions/core');
 const github = require('@actions/github');
 
@@ -18,8 +16,8 @@ async function run() {
         const eventName = github.context.eventName;
         const token = core.getInput("github-token", { required: true });
 
-        // const client_gh = new github.GitHub(token);
-        const client_gh = new GitHub(githubToken);
+        const client_gh = new github.GitHub(token);
+        // const client_gh = new GitHub(githubToken);
 
         core.info(`Event name: ${eventName}`);
         if (validEvent.indexOf(eventName) < 0) {
