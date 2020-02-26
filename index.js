@@ -120,16 +120,13 @@ async function run() {
             return
         }
 
-        client.pulls.createReview({
-          // owner: pullRequest.owner,
-          // repo: pullRequest.repo,
-          owner,
-          repo,
-          pull_number: pullRequest.number,
-          body: `Pull Request title "${title}" is approved!`,
-          event: 'APPROVE'
-        });
-
+        // client.pulls.createReview({
+        //   owner,
+        //   repo,
+        //   pull_number: pullRequest.number,
+        //   body: `Pull Request title "${title}" is approved!`,
+        //   event: 'APPROVE'
+        // });
     } catch (error) {
         // core.setFailed(error.message);
         client.pulls.createReview({
