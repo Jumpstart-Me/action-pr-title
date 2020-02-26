@@ -1,5 +1,5 @@
 # Branch naming rules
-<img alt="GitHub Actions status" src="https://github.com/deepakputhraya/action-pr-title/workflows/main/badge.svg">
+<img alt="GitHub Actions status" src="https://github.com/cschubiner/action-pr-title/workflows/main/badge.svg">
 
 Github action to enforce Pull Request title conventions
 
@@ -8,15 +8,29 @@ Github action to enforce Pull Request title conventions
 See [action.yml](./action.yml)
 
 ```yaml
-steps:
-- uses: deepakputhraya/action-pr-title@master
-  with:
-    regex: '([a-z])+\/([a-z])+' # Regex the title should match.
-    allowed_prefixes: 'feature,stable,fix' # title should start with the given prefix
-    prefix_case_sensitive: false # title prefix are case insensitive
-    min_length: 5 # Min length of the title
-    max_length: 20 # Max length of the title
+name: PR Title
+
+on:
+  pull_request:
+    types: [review_requested, edited, opened, assigned]
+
+jobs:
+  pr_title:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: cschubiner/action-pr-title@master
+      with:
+        allowed_prefixes: 'BREAKING CHANGE:,chore:,docs:,feat:,fix:,perf:,refactor:,style:,test:'
+        prefix_case_sensitive: true
+        min_length: 7 # Min length of the title
+        max_length: 200 # Max length of the title
+
 ```
+
+Unlike the [main branch](https://github.com/deepakputhraya/action-pr-title), this PR requests changes instead of failing the check. This is because Github doesn't dedupe checks, resulting in the errors encountered here:
+https://github.community/t5/GitHub-Actions/duplicate-checks-on-pull-request-event/td-p/33157
+
+
 
 ## License
 The scripts and documentation in this project are released under the [MIT License](./LICENSE)
