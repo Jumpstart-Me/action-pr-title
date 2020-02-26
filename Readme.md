@@ -1,5 +1,4 @@
 # Branch naming rules
-<img alt="GitHub Actions status" src="https://github.com/cschubiner/action-pr-title/workflows/main/badge.svg">
 
 Github action to enforce Pull Request title conventions
 
