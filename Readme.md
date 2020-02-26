@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: cschubiner/action-pr-title@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         allowed_prefixes: 'BREAKING CHANGE:,chore:,docs:,feat:,fix:,perf:,refactor:,style:,test:'
         prefix_case_sensitive: true
