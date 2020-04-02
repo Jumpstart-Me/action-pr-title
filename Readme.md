@@ -32,6 +32,5 @@ Unlike the [main branch](https://github.com/deepakputhraya/action-pr-title), thi
 https://github.community/t5/GitHub-Actions/duplicate-checks-on-pull-request-event/td-p/33157
 
 
-
 ## License
 The scripts and documentation in this project are released under the [MIT License](./LICENSE)
